@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "./SomeExample.sol";
+import "./QuestsCollection.sol";
 
-contract SomeExampleFactory {
+contract QuestsCollectionFactory {
     address[] public deployedContracts;
 
     event ContractDeployed(address indexed newContractAddress);
 
     function deployContract() public {
-        address newContract = address(new SomeExample());
+        address newContract = address(new QuestsCollection());
         deployedContracts.push(newContract);
         emit ContractDeployed(newContract);
     }
