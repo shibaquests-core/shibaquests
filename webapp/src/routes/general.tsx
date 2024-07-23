@@ -6,6 +6,7 @@ import { DeployPage } from "../pages/DeployPage.tsx";
 import { ConfigureContractPage } from "../pages/ConfigureContractPage.tsx";
 import { IndexPage } from "../pages/Index";
 import { AppIndexPage } from "../pages/app/Index";
+import { QuestsCollectionViewPage } from "../pages/QuestsCollectionViewPage.tsx";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -24,6 +25,10 @@ export const general: RouteObject[] = [
   {
     path: PATHS.app,
     element: <AppIndexPage />,
+  },
+  {
+    path: PATHS.questsCollectionView,
+    element: <QuestsCollectionViewPage />,
   },
   // ROUTES - END
 ];

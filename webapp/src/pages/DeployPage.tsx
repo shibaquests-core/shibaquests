@@ -4,8 +4,8 @@ import { DeployForm } from "../components/forms/DeployForm";
 import { useForm } from "react-hook-form";
 
 import {
-  someExampleFactoryAbi,
-  useWriteSomeExampleFactoryDeployContract,
+  questsCollectionFactoryAbi,
+  useWriteQuestsCollectionFactoryDeployContract,
 } from "../generated";
 import { decodeEventLog } from "viem";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
@@ -22,7 +22,7 @@ export const DeployPage: FC<DeployPageProps> = () => {
   const [loading, setLoading] = useState(false);
   const [deployedAddress, setDeployedAddress] = useState<string>();
   const form = useForm({});
-  const { writeContractAsync, data } = useWriteSomeExampleFactoryDeployContract();
+  const { writeContractAsync, data } = useWriteQuestsCollectionFactoryDeployContract();
   const { data: txData } = useWaitForTransactionReceipt({
     hash: data,
   });
@@ -30,7 +30,7 @@ export const DeployPage: FC<DeployPageProps> = () => {
     if (txData && txData?.logs) {
       const logs = txData.logs;
       const topics = decodeEventLog({
-        abi: someExampleFactoryAbi,
+        abi: questsCollectionFactoryAbi,
         data: logs[0].data,
         topics: logs[0].topics,
       });

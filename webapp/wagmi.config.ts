@@ -1,18 +1,18 @@
 import { defineConfig } from '@wagmi/cli';
 import { react } from '@wagmi/cli/plugins';
-import SomeExample from './src/abi/SomeExample.json';
-import SomeExampleFactory from './src/abi/SomeExampleFactory.json';
+import QuestsCollection from './src/abi/QuestsCollection.json';
+import QuestsCollectionFactory from './src/abi/QuestsCollectionFactory.json';
  
 export default defineConfig({
   out: 'src/generated.ts',
   contracts: [
     {
-      name: 'SomeExample',
-      abi: SomeExample,
+      name: 'QuestsCollection',
+      abi: QuestsCollection,
     },
     {
-      name: 'SomeExampleFactory',
-      abi: SomeExampleFactory,
+      name: 'QuestsCollectionFactory',
+      abi: QuestsCollectionFactory,
     }
   ],
   plugins: [
