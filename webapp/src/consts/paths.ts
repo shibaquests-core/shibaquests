@@ -5,5 +5,6 @@ export const PATHS = {
   configureContract: '/configure-contract',
   deploy: '/deploy',
   questsCollectionView: '/quests-collections/:id',
+  questsCollectionCreate: '/quests-collections/create',
   // PATHS - END
 } as const;

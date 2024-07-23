@@ -16,6 +16,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
+    "@tailwindcss/typography": "^0.5.13",
     "@tanstack/react-query": "^5.51.11",
     "@tanstack/react-query-devtools": "^5.51.11",
     "@web3modal/wagmi": "^5.0.7",

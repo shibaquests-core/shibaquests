@@ -7,6 +7,7 @@ import { ConfigureContractPage } from "../pages/ConfigureContractPage.tsx";
 import { IndexPage } from "../pages/Index";
 import { AppIndexPage } from "../pages/app/Index";
 import { QuestsCollectionViewPage } from "../pages/QuestsCollectionViewPage.tsx";
+import { QuestsCollectionCreatePage } from '../pages/QuestsCollectionCreatePage';
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -30,5 +31,9 @@ export const general: RouteObject[] = [
     path: PATHS.questsCollectionView,
     element: <QuestsCollectionViewPage />,
   },
+  {
+    path: PATHS.questsCollectionCreate,
+    element: <QuestsCollectionCreatePage />,
+  }
   // ROUTES - END
 ];
