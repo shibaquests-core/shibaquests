@@ -135,7 +135,7 @@ export const RichText: FC<{
     <div>
       <div
         className={classNames(
-          "border border-base-content border-opacity-0 bg-base-100 rounded-md overflow-hidden [&>div>.tiptap]:prose [&>div>.tiptap]:outline-none [&>div>.tiptap]:p-6",
+          "border bg-base-100 rounded-md overflow-hidden [&>div>.tiptap]:prose [&>div>.tiptap]:outline-none [&>div>.tiptap]:p-6",
           { "border-error": hasError }
         )}
       >

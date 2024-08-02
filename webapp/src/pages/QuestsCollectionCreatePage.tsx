@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { CreateQuestsCollectionForm, CreateQuestsCollectionFormValues } from '../components/forms/CreateQuestsCollectionForm';
 import { useForm } from 'react-hook-form';
+import { CreateERC721QuestForm } from '../components/forms/CreateERC721QuestForm';
 
 export interface QuestsCollectionCreatePageProps {
   
@@ -32,7 +33,7 @@ export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (
           </ol>
         </div>
         <div className="p-8">
-          <CreateQuestsCollectionForm form={form} onSubmit={console.log} />
+          <CreateERC721QuestForm form={form} onSubmit={console.log} />
         </div>
       </div>
     </div>
