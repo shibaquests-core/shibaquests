@@ -3,17 +3,17 @@ import { Form, FormProps } from "../Form";
 import { TextFormInput } from "./inputs/TextFormInput";
 import { NumberFormInput } from "./inputs/NumberFormInput";
 
-export interface CreateERC721QuestFormValues {
+export interface CreateERC20QuestFormValues {
   contractAddress: string;
-  minAmountOfTokens: number;
+  minimumAmount: number;
 }
 
-export interface CreateERC721QuestFormProps
-  extends Omit<FormProps<CreateERC721QuestFormValues>, "children"> {
+export interface CreateERC20QuestFormProps
+  extends Omit<FormProps<CreateERC20QuestFormValues>, "children"> {
   footer?: React.ReactNode;
 }
 
-export const CreateERC721QuestForm: FC<CreateERC721QuestFormProps> = ({
+export const CreateERC20QuestForm: FC<CreateERC20QuestFormProps> = ({
   form,
   onSubmit,
   footer = (
@@ -30,8 +30,8 @@ export const CreateERC721QuestForm: FC<CreateERC721QuestFormProps> = ({
 }) => {
   return (
     <Form form={form} onSubmit={onSubmit}>
-      <TextFormInput name="contractAddress" label="NFT Collection Address" />
-      <NumberFormInput name="minAmountOfTokens" label="Minimum Amount of Tokens" />
+      <TextFormInput name="contractAddress" label="Contract Address" />
+      <NumberFormInput name="minimumAmount" label="Minimum Amount of Tokens" />
       {footer}
     </Form>
   );
