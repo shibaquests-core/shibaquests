@@ -10,4 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+model QuestCollections {
+  address     String   @id
+  name        String
+  description String
+  logo        String
+  cover       String
+  owner       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
