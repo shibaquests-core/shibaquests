@@ -44,7 +44,8 @@ export const DeployPage: FC<DeployPageProps> = () => {
   const onSubmit = async () => {
     setLoading(true);
     await writeContractAsync({
-      address: FACTORY.address as `0x${string}`
+      address: FACTORY.address as `0x${string}`,
+      args: ["metadata"],
     });
   };
 

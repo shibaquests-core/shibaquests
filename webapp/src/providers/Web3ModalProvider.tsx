@@ -2,14 +2,29 @@ import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 
 import { WagmiProvider } from 'wagmi'
-import { localhost } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { defineChain } from 'viem'
 
 // 0. Setup queryClient
 const queryClient = new QueryClient()
 
 // 1. Get projectId from https://cloud.walletconnect.com
-const chains = [localhost] as const
+const puppynet = defineChain({
+  id: 157,
+  name: 'Puppynet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BONE',
+    symbol: 'BONE',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://puppynet.shibrpc.com']
+    },
+  },
+});
+
+const chains = [puppynet] as const
 const projectId = import.meta.env.VITE_WEB3_MODAL_PROJECT_ID as string;
 
 // 2. Create wagmiConfig

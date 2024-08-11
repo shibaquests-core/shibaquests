@@ -1,6 +1,12 @@
 [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_metadata",
+        "type": "string"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -52,37 +58,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_quest",
-        "type": "address"
-      }
-    ],
-    "name": "addQuest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_newQuest",
-        "type": "address"
-      }
-    ],
-    "name": "editQuest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_index",
         "type": "uint256"
@@ -107,6 +82,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "metadata",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -147,12 +135,17 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_index",
-        "type": "uint256"
+        "internalType": "address[]",
+        "name": "_quests",
+        "type": "address[]"
+      },
+      {
+        "internalType": "string",
+        "name": "_metadata",
+        "type": "string"
       }
     ],
-    "name": "removeQuest",
+    "name": "setQuests",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

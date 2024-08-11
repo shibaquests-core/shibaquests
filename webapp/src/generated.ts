@@ -10,7 +10,11 @@ import {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const questsCollectionAbi = [
-  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    type: 'constructor',
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+    stateMutability: 'nonpayable',
+  },
   {
     type: 'event',
     anonymous: false,
@@ -58,23 +62,6 @@ export const questsCollectionAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_quest', internalType: 'address', type: 'address' }],
-    name: 'addQuest',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_index', internalType: 'uint256', type: 'uint256' },
-      { name: '_newQuest', internalType: 'address', type: 'address' },
-    ],
-    name: 'editQuest',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
     inputs: [{ name: '_index', internalType: 'uint256', type: 'uint256' }],
     name: 'getQuest',
     outputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -85,6 +72,13 @@ export const questsCollectionAbi = [
     inputs: [],
     name: 'getQuestsCount',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'metadata',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
     stateMutability: 'view',
   },
   {
@@ -103,8 +97,11 @@ export const questsCollectionAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_index', internalType: 'uint256', type: 'uint256' }],
-    name: 'removeQuest',
+    inputs: [
+      { name: '_quests', internalType: 'address[]', type: 'address[]' },
+      { name: '_metadata', internalType: 'string', type: 'string' },
+    ],
+    name: 'setQuests',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -130,7 +127,7 @@ export const questsCollectionFactoryAbi = [
   },
   {
     type: 'function',
-    inputs: [],
+    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
     name: 'deployContract',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -181,6 +178,15 @@ export const useReadQuestsCollectionGetQuestsCount =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"metadata"`
+ */
+export const useReadQuestsCollectionMetadata =
+  /*#__PURE__*/ createUseReadContract({
+    abi: questsCollectionAbi,
+    functionName: 'metadata',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"owner"`
  */
 export const useReadQuestsCollectionOwner = /*#__PURE__*/ createUseReadContract(
@@ -204,30 +210,12 @@ export const useWriteQuestsCollection = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"addQuest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"setQuests"`
  */
-export const useWriteQuestsCollectionAddQuest =
+export const useWriteQuestsCollectionSetQuests =
   /*#__PURE__*/ createUseWriteContract({
     abi: questsCollectionAbi,
-    functionName: 'addQuest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"editQuest"`
- */
-export const useWriteQuestsCollectionEditQuest =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: questsCollectionAbi,
-    functionName: 'editQuest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"removeQuest"`
- */
-export const useWriteQuestsCollectionRemoveQuest =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: questsCollectionAbi,
-    functionName: 'removeQuest',
+    functionName: 'setQuests',
   })
 
 /**
@@ -237,30 +225,12 @@ export const useSimulateQuestsCollection =
   /*#__PURE__*/ createUseSimulateContract({ abi: questsCollectionAbi })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"addQuest"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"setQuests"`
  */
-export const useSimulateQuestsCollectionAddQuest =
+export const useSimulateQuestsCollectionSetQuests =
   /*#__PURE__*/ createUseSimulateContract({
     abi: questsCollectionAbi,
-    functionName: 'addQuest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"editQuest"`
- */
-export const useSimulateQuestsCollectionEditQuest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: questsCollectionAbi,
-    functionName: 'editQuest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link questsCollectionAbi}__ and `functionName` set to `"removeQuest"`
- */
-export const useSimulateQuestsCollectionRemoveQuest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: questsCollectionAbi,
-    functionName: 'removeQuest',
+    functionName: 'setQuests',
   })
 
 /**

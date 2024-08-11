@@ -8,6 +8,7 @@ import { IndexPage } from "../pages/Index";
 import { AppIndexPage } from "../pages/app/Index";
 import { QuestsCollectionViewPage } from "../pages/QuestsCollectionViewPage.tsx";
 import { QuestsCollectionCreatePage } from '../pages/QuestsCollectionCreatePage';
+import { QuestsCollectionManagePage } from "../pages/QuestsCollectionManagePage.tsx";
 
 export const general: RouteObject[] = [
   // ROUTES - START
@@ -34,6 +35,10 @@ export const general: RouteObject[] = [
   {
     path: PATHS.questsCollectionCreate,
     element: <QuestsCollectionCreatePage />,
+  },
+  {
+    path: PATHS.questsCollectionManage,
+    element: <QuestsCollectionManagePage />,
   }
   // ROUTES - END
 ];

@@ -68,7 +68,7 @@ export const Web3StorageImageUploader: FC<Web3StorageImageUploaderProps> = ({
           <div role="status">
             <svg
               aria-hidden="true"
-              className="w-8 h-8 mr-2 text-base-100/80 animate-spin fill-primary/80"
+              className="w-8 h-8 text-base-100/80 animate-spin fill-primary/80"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
