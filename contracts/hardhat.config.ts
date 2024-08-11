@@ -6,22 +6,16 @@ import "@nomicfoundation/hardhat-toolbox";
 import 'hardhat-abi-exporter';
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.20",
+  solidity: "0.8.1",
   abiExporter: {
     path: '../webapp/src/abi',
     flat: true,
   },
   networks: {
-    hardhat: {
-      chainId: 1337,
-    },
-    testnet: {
-      url: process.env.TESTNET_URL,
-      accounts: [process.env.TESTNET_PRIVATE_KEY as string],
-    },
-    mainnet: {
-      url: process.env.MAINNET_URL,
-      accounts: [process.env.MAINNET_PRIVATE_KEY as string],
+    puppynet: {
+      url: process.env.PUPPYNET_URL,
+      accounts: [process.env.PUPPYNET_PRIVATE_KEY as string],
+      chainId: 157,
     },
   },
 };

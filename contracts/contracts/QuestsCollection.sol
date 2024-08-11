@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.0;
 
 import "./interfaces/IQuest.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
@@ -9,6 +9,7 @@ contract QuestsCollection {
     // Array to store the addresses of the Quest contracts
     address[] public quests;
     address public owner;
+    string public metadata;
 
     // Event emitted when a new quest is added
     event QuestAdded(address indexed questAddress);
@@ -25,39 +26,15 @@ contract QuestsCollection {
         _;
     }
 
-    constructor() {
+    constructor(string memory _metadata) {
         // Set the owner to the address that deploys the contract
         owner = msg.sender;
+        metadata = _metadata;
     }
 
-    // Function to add a new quest to the collection
-    function addQuest(address _quest) public onlyOwner {
-        require(_quest != address(0), "Invalid quest address.");
-        require(ERC165(_quest).supportsInterface(type(IQuest).interfaceId), "Quest must implement IQuest interface.");
-        quests.push(_quest);
-        emit QuestAdded(_quest);
-    }
-
-    // Function to remove a quest from the collection
-    function removeQuest(uint _index) public onlyOwner {
-        require(_index < quests.length, "Index out of bounds.");
-        address questAddress = quests[_index];
-
-        // Move the last element to the deleted spot to maintain array continuity
-        quests[_index] = quests[quests.length - 1];
-        quests.pop();
-
-        emit QuestRemoved(questAddress);
-    }
-
-    // Function to edit an existing quest in the collection
-    function editQuest(uint _index, address _newQuest) public onlyOwner {
-        require(_index < quests.length, "Index out of bounds.");
-        require(_newQuest != address(0), "Invalid new quest address.");
-        address oldQuestAddress = quests[_index];
-        quests[_index] = _newQuest;
-
-        emit QuestEdited(oldQuestAddress, _newQuest);
+    function setQuests(address[] memory _quests, string memory _metadata) public onlyOwner {
+        quests = _quests;
+        metadata = _metadata;
     }
 
     // Function to get the total number of quests

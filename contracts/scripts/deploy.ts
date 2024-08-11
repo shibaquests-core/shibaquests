@@ -1,12 +1,20 @@
 import { ethers } from "hardhat";
+import { QuestsCollection } from '../typechain-types/contracts/QuestsCollection';
 
 async function main() {
-  const contract = await ethers.deployContract("SomeExampleFactory");
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
+  const QuestsCollectionFactory = await ethers.getContractFactory("QuestsCollectionFactory");
+  const questsCollectionFactory = await QuestsCollectionFactory.deploy();
+  await questsCollectionFactory.waitForDeployment();
 
-  await contract.waitForDeployment();
+  // console.log(contract);
+
+  // const res = await contract.waitForDeployment();
+  // console.log(res);
 
   console.log(
-    `SomeExampleFactory deployed to ${contract.target}`
+    `SomeExampleFactory deployed to ${await questsCollectionFactory.getAddress()}`
   );
 }
 
