@@ -1,18 +1,13 @@
 import { CheckCircleIcon, CheckIcon, LockClosedIcon } from '@heroicons/react/24/solid'
 import React, { FC } from 'react'
+import { DeployedQuest } from '../types'
+import { getCIDLink } from '../utils/web3Storage';
 
 export interface QuestItemProps {
-  
+  quest: DeployedQuest & { completed?: boolean };
 }
 
-export const QuestItem: FC<QuestItemProps> = (props) => {
-  const quest = {
-    id: '123',
-    name: 'Quest Name',
-    description: 'Lore ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc. Donec nec odio vitae nunc. Donec nec odio vitae nunc.',
-    iconImageSrc: '',
-    completed: true,
-  }
+export const QuestItem: FC<QuestItemProps> = ({ quest }) => {
   return (
     <div className="border border-gray-300 rounded-md w-full">
       <div className="flex p-8">
@@ -22,7 +17,7 @@ export const QuestItem: FC<QuestItemProps> = (props) => {
               <LockClosedIcon className="h-6 w-6 text-white" />
             </div>
           )}
-          <img src={quest.iconImageSrc} className="h-16 w-16 border-4 border-gray-500 rounded-md" />
+          <img src={getCIDLink(quest.icon)} className="h-16 w-16 border-4 border-gray-500 rounded-md" />
         </div>
         <div className="pl-4 w-full">
           <div>

@@ -6,13 +6,57 @@ import {
 } from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BasicQuestFactory
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const basicQuestFactoryAbi = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'newContractAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'ContractDeployed',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'deployContract',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'deployedContracts',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getDeployedContracts',
+    outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
+    stateMutability: 'view',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QuestsCollection
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const questsCollectionAbi = [
   {
     type: 'constructor',
-    inputs: [{ name: '_metadata', internalType: 'string', type: 'string' }],
+    inputs: [
+      { name: '_owner', internalType: 'address', type: 'address' },
+      { name: '_metadata', internalType: 'string', type: 'string' },
+    ],
     stateMutability: 'nonpayable',
   },
   {
@@ -151,6 +195,77 @@ export const questsCollectionFactoryAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__
+ */
+export const useReadBasicQuestFactory = /*#__PURE__*/ createUseReadContract({
+  abi: basicQuestFactoryAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__ and `functionName` set to `"deployedContracts"`
+ */
+export const useReadBasicQuestFactoryDeployedContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: basicQuestFactoryAbi,
+    functionName: 'deployedContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__ and `functionName` set to `"getDeployedContracts"`
+ */
+export const useReadBasicQuestFactoryGetDeployedContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: basicQuestFactoryAbi,
+    functionName: 'getDeployedContracts',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__
+ */
+export const useWriteBasicQuestFactory = /*#__PURE__*/ createUseWriteContract({
+  abi: basicQuestFactoryAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__ and `functionName` set to `"deployContract"`
+ */
+export const useWriteBasicQuestFactoryDeployContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: basicQuestFactoryAbi,
+    functionName: 'deployContract',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__
+ */
+export const useSimulateBasicQuestFactory =
+  /*#__PURE__*/ createUseSimulateContract({ abi: basicQuestFactoryAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link basicQuestFactoryAbi}__ and `functionName` set to `"deployContract"`
+ */
+export const useSimulateBasicQuestFactoryDeployContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: basicQuestFactoryAbi,
+    functionName: 'deployContract',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link basicQuestFactoryAbi}__
+ */
+export const useWatchBasicQuestFactoryEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: basicQuestFactoryAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link basicQuestFactoryAbi}__ and `eventName` set to `"ContractDeployed"`
+ */
+export const useWatchBasicQuestFactoryContractDeployedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: basicQuestFactoryAbi,
+    eventName: 'ContractDeployed',
+  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link questsCollectionAbi}__

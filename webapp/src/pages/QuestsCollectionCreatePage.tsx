@@ -19,6 +19,7 @@ export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (
   const navigate = useNavigate();
   const acc = useAccount();
   const [loading, setLoading] = useState(false);
+  const [deployedData, setDeployedData] = useState<CreateQuestsCollectionFormValues>();
   const [deployedAddress, setDeployedAddress] = useState<string>();
   // const form = useForm({});
   const { writeContractAsync, data } = useWriteQuestsCollectionFactoryDeployContract();
@@ -40,24 +41,31 @@ export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (
       setLoading(false);
       toast.success('Deployment successful');
       setDeployedAddress(topics.args.newContractAddress);
+      if (!deployedData) return;
+      void (async () => {        
+        await createQuestsApiMutation.mutateAsync({
+          address: topics.args.newContractAddress,
+          name: deployedData.name,
+          description: deployedData.description,
+          logo: deployedData.logo,
+          cover: deployedData.cover,
+          owner: acc.address as string,
+        })
+        navigate(`/quests-collections/${topics.args.newContractAddress}/manage`);
+      })();
     }
   }, [navigate, txData]);
   const onSubmit = async (data: CreateQuestsCollectionFormValues) => {
-    const metadata = await uploadJSONToWeb3Storage(data);
+    const metadata = await uploadJSONToWeb3Storage({
+      ...data,
+      quests: [],
+    });
     setLoading(true);
     await writeContractAsync({
       address: FACTORY.address as `0x${string}`,
       args: [metadata]
     });
-    await createQuestsApiMutation.mutateAsync({
-      address: deployedAddress!,
-      name: data.name,
-      description: data.description,
-      logo: data.logo,
-      cover: data.cover,
-      owner: acc.address as string,
-    });
-    navigate(`/quests-collections/${deployedAddress!}/manage`);
+    setDeployedData(data);
   };
   const form = useForm<CreateQuestsCollectionFormValues>();
   return (

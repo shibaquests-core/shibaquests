@@ -4,8 +4,8 @@ export const PATHS = {
   app: '/app',
   configureContract: '/configure-contract',
   deploy: '/deploy',
-  questsCollectionView: '/quests-collections/:id',
+  questsCollectionView: '/quests-collections/:address',
   questsCollectionCreate: '/quests-collections/create',
-  questsCollectionManage: '/quests-collections/:id/manage',
+  questsCollectionManage: '/quests-collections/:address/manage',
   // PATHS - END
 } as const;
