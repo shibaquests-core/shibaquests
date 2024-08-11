@@ -26,9 +26,9 @@ contract QuestsCollection {
         _;
     }
 
-    constructor(string memory _metadata) {
+    constructor(address _owner, string memory _metadata) {
         // Set the owner to the address that deploys the contract
-        owner = msg.sender;
+        owner = _owner;
         metadata = _metadata;
     }
 
