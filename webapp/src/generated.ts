@@ -47,6 +47,41 @@ export const basicQuestFactoryAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IQuest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const iQuestAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'claimReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'isClaimedByAddress',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'address', type: 'address' }],
+    name: 'isCompletedByAddress',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QuestsCollection
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -265,6 +300,71 @@ export const useWatchBasicQuestFactoryContractDeployedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: basicQuestFactoryAbi,
     eventName: 'ContractDeployed',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iQuestAbi}__
+ */
+export const useReadIQuest = /*#__PURE__*/ createUseReadContract({
+  abi: iQuestAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iQuestAbi}__ and `functionName` set to `"isClaimedByAddress"`
+ */
+export const useReadIQuestIsClaimedByAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iQuestAbi,
+    functionName: 'isClaimedByAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iQuestAbi}__ and `functionName` set to `"isCompletedByAddress"`
+ */
+export const useReadIQuestIsCompletedByAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iQuestAbi,
+    functionName: 'isCompletedByAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iQuestAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadIQuestSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: iQuestAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iQuestAbi}__
+ */
+export const useWriteIQuest = /*#__PURE__*/ createUseWriteContract({
+  abi: iQuestAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iQuestAbi}__ and `functionName` set to `"claimReward"`
+ */
+export const useWriteIQuestClaimReward = /*#__PURE__*/ createUseWriteContract({
+  abi: iQuestAbi,
+  functionName: 'claimReward',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iQuestAbi}__
+ */
+export const useSimulateIQuest = /*#__PURE__*/ createUseSimulateContract({
+  abi: iQuestAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iQuestAbi}__ and `functionName` set to `"claimReward"`
+ */
+export const useSimulateIQuestClaimReward =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: iQuestAbi,
+    functionName: 'claimReward',
   })
 
 /**

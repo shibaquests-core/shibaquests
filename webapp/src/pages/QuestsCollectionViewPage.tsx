@@ -34,9 +34,9 @@ export const QuestsCollectionViewPage: FC<QuestsCollectionViewPageProps> = (prop
     id: '123',
     address: 'address',
     slug: 'slug',
-    coverImageSrc: '',
-    logoImageSrc: '',
-    name: 'My Name Test Ok!!',
+    coverImageSrc: getCIDLink(metadata?.cover),
+    logoImageSrc: getCIDLink(metadata?.logo),
+    name: metadata?.name,
     status: 'status',
   };
   return (
