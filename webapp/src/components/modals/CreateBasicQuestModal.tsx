@@ -10,6 +10,9 @@ import { toast } from 'react-toastify';
 import { DeployedQuest } from '../../types';
 import classNames from 'classnames';
 import { ImageUploaderFormInput } from '../forms/inputs/ImageUploaderFormInput';
+import { LoadingButton } from '../LoadingButton';
+import { useWaitForTransactionReceiptAsync } from '../../hooks/useWaitForTransactionReceiptAsync';
+import { handleWeb3Error } from '../../utils/handleWeb3Error';
 
 export const CreateBasicQuestModalId = 'create-basic-quest-modal';
 
@@ -24,6 +27,7 @@ export interface CreateBasicQuestModalProps {
 }
 
 export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => {
+  const waitTxn = useWaitForTransactionReceiptAsync();
   const [loading, setLoading] = useState(false);
   const form = useForm<CreateBasicQuestModalFormValues>();
   const { writeContractAsync, data } = useWriteBasicQuestFactoryDeployContract();
@@ -35,10 +39,16 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
     modal.close();
   };
   const onSubmit = async (data: CreateBasicQuestModalFormValues) => {
-    await writeContractAsync({
-      address: import.meta.env.VITE_BASIC_QUEST_FACTORY_ADDRESS as `0x${string}`,
-    });
-    console.log(data);
+    setLoading(true);
+    try {      
+      const txn = await writeContractAsync({
+        address: import.meta.env.VITE_BASIC_QUEST_FACTORY_ADDRESS as `0x${string}`,
+      });
+      await waitTxn(txn);
+    } catch (error) {
+      handleWeb3Error(error);
+      setLoading(false);
+    }
   }
   useEffect(() => {
     if (txData && txData?.logs) {
@@ -57,6 +67,7 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
         description: form.getValues().description,
       });
       closeModal();
+      form.reset();
     }
   }, [txData]);
   return (
@@ -76,10 +87,12 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
           </div>
           <div className="modal-action">
             <button type="button" className="btn" onClick={() => closeModal()}>Cancel</button>
-            <button className={classNames("btn btn-primary ml-2", { 'btn-disabled': loading })}>
-              {loading && <span className="spinner mr-2" />}
-              {loading ? 'Deploying...' : 'Deploy & Add'}
-            </button>
+            <LoadingButton
+              type="submit"
+              label="Deploy & Add"
+              loadingLabel='Deploying...'
+              loading={loading}
+            />
           </div>
         </div>
       </dialog>

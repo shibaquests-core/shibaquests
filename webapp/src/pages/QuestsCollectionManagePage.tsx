@@ -1,19 +1,27 @@
 import { FC, useEffect, useState } from 'react'
 import { useReadQuestsCollectionMetadata, useWriteQuestsCollectionSetQuests } from '../generated'
 import { FACTORY } from '../consts/factory'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { getCIDLink, uploadJSONToWeb3Storage } from '../utils/web3Storage'
 import { DeployedQuest, QuestsCollectionMetadata } from '../types'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import { CreateBasicQuestModal, CreateBasicQuestModalId } from '../components/modals/CreateBasicQuestModal'
+import { LoadingButton } from '../components/LoadingButton'
+import { handleWeb3Error } from '../utils/handleWeb3Error'
+import { useWaitForTransactionReceiptAsync } from '../hooks/useWaitForTransactionReceiptAsync'
+import { toast } from 'react-toastify'
+import { type } from '../../../contracts/typechain-types/@openzeppelin/contracts/utils/introspection/index';
 
 export interface QuestsCollectionManagePageProps {
 
 }
 
 export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (props) => {
+  const navigate = useNavigate();
+  const waitForTxn = useWaitForTransactionReceiptAsync();
   const params = useParams();
+  const [loading, setLoading] = useState(false);
   const [metadata, setMetadata] = useState<QuestsCollectionMetadata>();
   const [deployedQuests, setDeployedQuests] = useState<DeployedQuest[]>([]);
   const { writeContractAsync } = useWriteQuestsCollectionSetQuests();
@@ -37,20 +45,25 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
     }
   };
   const updateCollection = async () => {
+    setLoading(true);
     const newMetadata = await uploadJSONToWeb3Storage({
       ...metadata,
       quests: deployedQuests,
     });
     try {      
-      await writeContractAsync({
+      const txnHash = await writeContractAsync({
         address: params.address as `0x${string}`,
         args: [
           deployedQuests.map((quest) => quest.address as `0x${string}`),
           newMetadata,
         ]
       });
+      await waitForTxn(txnHash);
+      toast.success('Collection updated');
+      navigate(`/quests-collections/${params.address}`);
     } catch (error) {
-      console.log(error.message);
+      handleWeb3Error(error);
+      setLoading(false);
     }
   };
   return ( 
@@ -108,8 +121,14 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
               </div>
             </div>
           </div>
-          <div className="p-8 border-t flex justify-end" onClick={() => updateCollection()}>
-            <button className="btn btn-primary">Update Collection</button>
+          <div className="p-8 border-t flex justify-end">
+            <LoadingButton
+              type="button"
+              onClick={() => updateCollection()}
+              loading={loading}
+              label="Update Collection"
+              loadingLabel="Updating..."
+            />
           </div>
         </div>
       </div>

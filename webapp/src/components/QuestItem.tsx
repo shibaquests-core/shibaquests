@@ -1,16 +1,20 @@
-import { CheckCircleIcon, CheckIcon, LockClosedIcon } from '@heroicons/react/24/solid'
-import React, { FC } from 'react'
+import { CheckCircleIcon, LockClosedIcon } from '@heroicons/react/24/solid'
+import { FC, useState } from 'react'
 import { DeployedQuest } from '../types'
 import { getCIDLink } from '../utils/web3Storage';
 import { useReadIQuestIsClaimedByAddress, useReadIQuestIsCompletedByAddress, useWriteIQuestClaimReward } from '../generated';
 import { useAccount, useClient } from 'wagmi';
-import { waitForTransactionReceipt } from 'viem/actions';
+import { useWaitForTransactionReceiptAsync } from '../hooks/useWaitForTransactionReceiptAsync';
+import { LoadingButton } from './LoadingButton';
+import { handleWeb3Error } from '../utils/handleWeb3Error';
 
 export interface QuestItemProps {
   quest: DeployedQuest & { completed?: boolean };
 }
 
 export const QuestItem: FC<QuestItemProps> = ({ quest }) => {
+  const [loadingClaim, setLoadingClaim] = useState(false);
+  const waitForTxn = useWaitForTransactionReceiptAsync();
   const wagmiClient = useClient();
   const acc = useAccount();
   const {data: isCompleted, refetch: refreshIsCompleted } = useReadIQuestIsCompletedByAddress({
@@ -28,17 +32,21 @@ export const QuestItem: FC<QuestItemProps> = ({ quest }) => {
 
   const { writeContractAsync: claimContractAsync } = useWriteIQuestClaimReward();
   const claim = async () => {
-    if (!wagmiClient) {
-      return;
+    setLoadingClaim(true);
+    try {
+      if (!wagmiClient) {
+        return;
+      }
+      const txnHash = await claimContractAsync({
+        address: quest.address as `0x${string}`,
+      });
+      await waitForTxn(txnHash);
+      await refreshIsCompleted();
+      await refreshIsClaimed();
+    } catch (error) {
+      handleWeb3Error(error);
     }
-    const txnHash = await claimContractAsync({
-      address: quest.address as `0x${string}`,
-    });
-    await waitForTransactionReceipt(wagmiClient, {
-      hash: txnHash,
-    });
-    await refreshIsCompleted();
-    await refreshIsClaimed();
+    setLoadingClaim(false);
   }
 
   return (
@@ -76,9 +84,12 @@ export const QuestItem: FC<QuestItemProps> = ({ quest }) => {
                 </div>
             </div>
             ): (
-              <button onClick={claim} className="btn btn-primary btn-block rounded-none rounded-br-md">
-                Claim
-              </button>
+              <LoadingButton
+                onClick={claim} className="btn btn-primary btn-block rounded-none rounded-br-md"
+                loading={loadingClaim}
+                label='Claim'
+                loadingLabel='Claiming...'
+              />
             )
           )}
         </div>
