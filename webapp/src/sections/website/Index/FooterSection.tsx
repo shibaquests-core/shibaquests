@@ -9,7 +9,7 @@ export const FooterSection: FC<FooterSectionProps> = () => {
       projectName="ShibaQuests"
       mainLinks={[
         { name: "Home", href: "/" },
-        { name: "App", href: "/app" },
+        { name: "About", href: "/about" },
       ]}
       socialLinks={[
         {

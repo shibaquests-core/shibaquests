@@ -6,11 +6,14 @@ import { CreateQuestsCollectionDto } from './create-quests-collections.dto';
 export class QuestsCollectionsController {
   constructor(private prismaService: PrismaService) {}
 
-  @Get('/featured')
-  findAll() {
-    return this.prismaService.questCollections.findMany({
-      take: 10,
+  @Get('/')
+  async findAll() {
+    const collections = await this.prismaService.questCollections.findMany({
+      take: 11,
     });
+    const featured = collections[0];
+    const recent = collections.slice(1);
+    return { featured, recent };
   }
 
   @Post()

@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { useReadQuestsCollectionMetadata, useWriteQuestsCollectionSetQuests } from '../generated'
-import { FACTORY } from '../consts/factory'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { getCIDLink, uploadJSONToWeb3Storage } from '../utils/web3Storage'
@@ -11,13 +10,12 @@ import { LoadingButton } from '../components/LoadingButton'
 import { handleWeb3Error } from '../utils/handleWeb3Error'
 import { useWaitForTransactionReceiptAsync } from '../hooks/useWaitForTransactionReceiptAsync'
 import { toast } from 'react-toastify'
-import { type } from '../../../contracts/typechain-types/@openzeppelin/contracts/utils/introspection/index';
 
 export interface QuestsCollectionManagePageProps {
 
 }
 
-export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (props) => {
+export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = () => {
   const navigate = useNavigate();
   const waitForTxn = useWaitForTransactionReceiptAsync();
   const params = useParams();
@@ -60,7 +58,7 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
       });
       await waitForTxn(txnHash);
       toast.success('Collection updated');
-      navigate(`/quests-collections/${params.address}`);
+      navigate(`/quests-collections/${params.address ?? ''}`);
     } catch (error) {
       handleWeb3Error(error);
       setLoading(false);

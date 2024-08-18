@@ -2,20 +2,20 @@ import { FC, useEffect, useState } from 'react'
 import { FeaturedQuestCollection } from '../components/FeaturedQuestCollection';
 import { QuestItem } from '../components/QuestItem';
 import { DeployedQuest, QuestsCollectionMetadata } from '../types';
-import { useReadQuestsCollectionMetadata, useWriteQuestsCollectionSetQuests } from '../generated';
+import { useReadQuestsCollectionMetadata } from '../generated';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getCIDLink } from '../utils/web3Storage';
+import { Topbar } from '../components/Topbar';
 
 export interface QuestsCollectionViewPageProps {
   
 }
 
-export const QuestsCollectionViewPage: FC<QuestsCollectionViewPageProps> = (props) => {
+export const QuestsCollectionViewPage: FC<QuestsCollectionViewPageProps> = () => {
   const params = useParams();
   const [metadata, setMetadata] = useState<QuestsCollectionMetadata>();
   const [deployedQuests, setDeployedQuests] = useState<DeployedQuest[]>([]);
-  const { writeContractAsync } = useWriteQuestsCollectionSetQuests();
   const { data: cid } = useReadQuestsCollectionMetadata({
     address: params.address as `0x${string}`,
   });
@@ -29,19 +29,18 @@ export const QuestsCollectionViewPage: FC<QuestsCollectionViewPageProps> = (prop
     setMetadata(medatada.data);
     setDeployedQuests(medatada.data.quests);
   };
-
-  const collection = {
-    id: '123',
-    address: 'address',
-    slug: 'slug',
-    coverImageSrc: getCIDLink(metadata?.cover),
-    logoImageSrc: getCIDLink(metadata?.logo),
-    name: metadata?.name,
-    status: 'status',
-  };
+  if (!metadata) return <div>Loading...</div>;
   return (
     <div>
-      <FeaturedQuestCollection collection={collection} rounded={false} />
+      <div className="fixed w-full z-30">
+        <Topbar theme='dark' />
+      </div>
+      <FeaturedQuestCollection
+        rounded={false}
+        name={metadata.name}
+        cover={metadata.cover}
+        logo={metadata.logo}
+      />
 
       <div className="container mx-auto">
         <h1 className="text-4xl font-bold mt-8 text-gray-600">Quests</h1>

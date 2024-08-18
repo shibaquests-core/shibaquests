@@ -8,7 +8,6 @@ import { useWaitForTransactionReceipt } from 'wagmi';
 import { decodeEventLog } from 'viem';
 import { toast } from 'react-toastify';
 import { DeployedQuest } from '../../types';
-import classNames from 'classnames';
 import { ImageUploaderFormInput } from '../forms/inputs/ImageUploaderFormInput';
 import { LoadingButton } from '../LoadingButton';
 import { useWaitForTransactionReceiptAsync } from '../../hooks/useWaitForTransactionReceiptAsync';
@@ -38,7 +37,7 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
     const modal = document.getElementById(CreateBasicQuestModalId) as HTMLElement  & { close: () => void };
     modal.close();
   };
-  const onSubmit = async (data: CreateBasicQuestModalFormValues) => {
+  const onSubmit = async () => {
     setLoading(true);
     try {      
       const txn = await writeContractAsync({

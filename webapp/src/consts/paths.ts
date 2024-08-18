@@ -1,6 +1,7 @@
 export const PATHS = {
   // PATHS - START
   index: '/',
+  about: '/about',
   app: '/app',
   configureContract: '/configure-contract',
   deploy: '/deploy',

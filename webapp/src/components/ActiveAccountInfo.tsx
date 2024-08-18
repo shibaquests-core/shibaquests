@@ -1,14 +1,16 @@
 import React, { FC, useMemo } from 'react'
-import { useAccount, useBalance, useNetwork } from 'wagmi'
+import { useAccount, useBalance, useConfig } from 'wagmi'
 import { AccountInfo, AccountInfoProps } from './AccountInfo';
 
 export interface ActiveAccountInfoProps extends Pick<AccountInfoProps, 'secondaryInfo'> {
   disconnectedPlaceholder?: React.ReactNode;
+  theme?: 'light' | 'dark';
 }
 
 export const ActiveAccountInfo: FC<ActiveAccountInfoProps> = ({
   secondaryInfo,
   disconnectedPlaceholder = null,
+  theme = 'light',
 }) => {
   const account = useAccount();
   const { data: balanceData } = useBalance({
@@ -20,7 +22,8 @@ export const ActiveAccountInfo: FC<ActiveAccountInfoProps> = ({
     }
     return parseFloat(balanceData?.formatted || '0')
   }, [balanceData]);
-  const { chain } = useNetwork()
+  const { chains } = useConfig();
+  const chain = chains.find((c) => c.id === account.chainId);
   if (!account.isConnected) {
     return disconnectedPlaceholder;
   }
@@ -29,7 +32,9 @@ export const ActiveAccountInfo: FC<ActiveAccountInfoProps> = ({
       address={account.address || ''}
       secondaryInfo={secondaryInfo}
       networkName={chain?.name}
+      networkColor='#2ecc71'
       balance={balance}
+      theme={theme}
     />
   )
 }

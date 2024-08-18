@@ -11,17 +11,17 @@ import { uploadJSONToWeb3Storage } from '../utils/web3Storage';
 import { useMutation } from '@tanstack/react-query';
 import { createQuestCollection } from '../client/mutations/createQuestCollection';
 import { handleWeb3Error } from '../utils/handleWeb3Error';
+import { Topbar } from '../components/Topbar';
 
 export interface QuestsCollectionCreatePageProps {
-  
+
 }
 
-export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (props) => {
+export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = () => {
   const navigate = useNavigate();
   const acc = useAccount();
   const [loading, setLoading] = useState(false);
   const [deployedData, setDeployedData] = useState<CreateQuestsCollectionFormValues>();
-  // const form = useForm({});
   const { writeContractAsync, data } = useWriteQuestsCollectionFactoryDeployContract();
   const { data: txData } = useWaitForTransactionReceipt({
     hash: data,
@@ -40,7 +40,7 @@ export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (
       });
       toast.success('Deployment successful');
       if (!deployedData) return;
-      void (async () => {        
+      void (async () => {
         await createQuestsApiMutation.mutateAsync({
           address: topics.args.newContractAddress,
           name: deployedData.name,
@@ -73,14 +73,17 @@ export const QuestsCollectionCreatePage: FC<QuestsCollectionCreatePageProps> = (
   };
   const form = useForm<CreateQuestsCollectionFormValues>();
   return (
-    <div className="w-screen h-screen bg-gray-200 flex items-center justify-center">
-      <div className="bg-white w-full max-w-xl border rounded-md shadow-sm">
-        <div className="p-8">
-          <CreateQuestsCollectionForm
-            form={form}
-            onSubmit={(data) => onSubmit(data)}
-            loading={loading}
-          />
+    <div>
+      <Topbar />
+      <div className="w-screen h-screen bg-gray-100 flex items-center justify-center">
+        <div className="bg-white w-full max-w-xl border rounded-md shadow-sm">
+          <div className="p-8">
+            <CreateQuestsCollectionForm
+              form={form}
+              onSubmit={(data) => onSubmit(data)}
+              loading={loading}
+            />
+          </div>
         </div>
       </div>
     </div>

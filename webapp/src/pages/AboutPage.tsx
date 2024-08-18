@@ -5,7 +5,7 @@ import { AboutSection } from '../sections/website/Index/AboutSection'
 import { FAQSection } from '../sections/website/Index/FAQSection'
 import { FooterSection } from '../sections/website/Index/FooterSection'
 
-export const IndexPage: FC = () => {
+export const AboutPage: FC = () => {
   return (
     <WebsiteLayout>
       <HeroSection />

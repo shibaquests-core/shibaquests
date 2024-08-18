@@ -12,6 +12,7 @@ export interface AccountInfoProps extends React.HTMLAttributes<HTMLDivElement> {
   networkName?: string;
   networkColor?: string;
   balance?: number;
+  theme?: 'light' | 'dark';
 }
 
 export const AccountInfo = ({
@@ -21,6 +22,7 @@ export const AccountInfo = ({
   networkName,
   networkColor,
   balance,
+  theme = 'light',
   ...rest
 }: AccountInfoProps) => {
   const renderInfo = () => {
@@ -29,11 +31,13 @@ export const AccountInfo = ({
       {
         "ml-3": infoPlacement === "right",
         "mr-3": infoPlacement === "left",
+        'text-white': theme === 'dark',
       }
     );
     const secondaryInfoWapperClassName = classNames({
       "text-right": infoPlacement === "left",
       "text-left": infoPlacement === "right",
+      'text-white': theme === 'dark',
     });
     return (
       <div className={className}>
@@ -52,7 +56,7 @@ export const AccountInfo = ({
     );
   };
   return (
-    <div className="AccountInfo flex items-center" {...rest}>
+    <div className="AccountInfo flex items-center" {...rest} >
       {infoPlacement === "left" && renderInfo()}
       <Avatar size={32} address={address} />
       {infoPlacement === "right" && renderInfo()}

@@ -9,7 +9,6 @@ interface UseSymbolRateOptions {
 
 export const useSymbolRate = (fromSymbol: string, toSymbols: string[], { enabled }: UseSymbolRateOptions) => useQuery({
   staleTime: 1000 * 60 * 15,
-  cacheTime: 1000 * 60 * 15,
   queryKey: [fromSymbol, toSymbols],
   enabled,
   queryFn: async (): Promise<{ [symbol: string]: number }> => {

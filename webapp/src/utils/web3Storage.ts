@@ -16,7 +16,7 @@ const pinata = new PinataSDK({
   pinataGateway: import.meta.env.VITE_PINATA_GATEWAY as string,
 });
 
-export const uploadToWeb3Storage = async (files: File[], options?: UploadToWeb3StorageOptions): Promise<string> => {
+export const uploadToWeb3Storage = async (files: File[], _options?: UploadToWeb3StorageOptions): Promise<string> => {
   if (files.length === 1) {
     const upload = await pinata.upload.file(files[0]);
     return upload.IpfsHash

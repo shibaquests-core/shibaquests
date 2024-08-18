@@ -12,6 +12,8 @@ async function bootstrap() {
 
   app.enableCors();
 
+  app.setGlobalPrefix('api');
+
   // APP SETUP - START
   const config = new DocumentBuilder()
     .setTitle('MyProject API Documentation')

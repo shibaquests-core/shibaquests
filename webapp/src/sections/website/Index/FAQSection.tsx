@@ -3,7 +3,7 @@ import { FAQSection as FAQSectionComp } from '../../../components/website/FAQSec
 
 export interface FAQSectionProps {}
 
-export const FAQSection: FC<FAQSectionProps> = (props) => {
+export const FAQSection: FC<FAQSectionProps> = () => {
   return (
     <FAQSectionComp
       items={[

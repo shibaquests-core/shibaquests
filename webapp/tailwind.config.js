@@ -21,7 +21,7 @@ export default {
       {
         light: {
           ...defaultTheme["[data-theme=light]"],
-          "primary": "#1d4ed8",
+          "primary": "#ff8300",
         },
       },
     ],
