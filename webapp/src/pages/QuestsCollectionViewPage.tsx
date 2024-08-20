@@ -45,7 +45,7 @@ export const QuestsCollectionViewPage: FC<QuestsCollectionViewPageProps> = () =>
       <div className="container mx-auto">
         <h1 className="text-4xl font-bold mt-8 text-gray-600">Quests</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 w-full mt-8">
-          {deployedQuests.map((quest) => <QuestItem quest={quest} />)}
+          {deployedQuests.map((quest, idx) => <QuestItem quest={quest} idx={idx} />)}
         </div>
       </div>
     </div>
