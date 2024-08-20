@@ -35,8 +35,11 @@ services:
     build:
       context: ./webapp
       args:
-        - VITE_WEB3_STORAGE_TOKEN=${VITE_WEB3_STORAGE_TOKEN}
-        - VITE_API_BASE_URL=${VITE_API_BASE_URL}
+        - VITE_PINATA_TOKEN=${VITE_PINATA_TOKEN}
+        - VITE_PINATA_GATEWAY=${VITE_PINATA_GATEWAY}
+        - VITE_WEB3_MODAL_PROJECT_ID=${VITE_WEB3_MODAL_PROJECT_ID}
+        - VITE_FACTORY_ADDRESS=${VITE_FACTORY_ADDRESS}
+        - VITE_BASIC_QUEST_FACTORY_ADDRESS=${VITE_BASIC_QUEST_FACTORY_ADDRESS}
   nginx:
     container_name: ${APP_NAME}-nginx
     image: ${APP_NAME}-nginx
