@@ -10,6 +10,7 @@ import { LoadingButton } from '../components/LoadingButton'
 import { handleWeb3Error } from '../utils/handleWeb3Error'
 import { useWaitForTransactionReceiptAsync } from '../hooks/useWaitForTransactionReceiptAsync'
 import { toast } from 'react-toastify'
+import { CreateERC721Modal, CreateERC721ModalId } from '../components/modals/CreateERC721QuestModal'
 
 export interface QuestsCollectionManagePageProps {
 
@@ -67,6 +68,7 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
   return ( 
     <>
       <CreateBasicQuestModal onDeployed={(quest) => setDeployedQuests([...deployedQuests, quest])} />
+      <CreateERC721Modal onDeployed={(quest) => setDeployedQuests([...deployedQuests, quest])} />
       <div className="w-screen h-screen bg-gray-200 flex items-center justify-center">
         <div className="bg-white w-full max-w-xl border rounded-md shadow-sm">
           <div className="border-b">
@@ -113,7 +115,7 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
                     <a onClick={() => openModal(CreateBasicQuestModalId)}>Basic Quest</a>
                   </li>
                   <li>
-                    <a>ERC721 Quest</a>
+                    <a onClick={() => openModal(CreateERC721ModalId)}>ERC721 Quest</a>
                   </li>
                 </ul>
               </div>

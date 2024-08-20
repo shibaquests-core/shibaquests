@@ -47,6 +47,50 @@ export const basicQuestFactoryAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ERC721QuestFactory
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const erc721QuestFactoryAbi = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'newContractAddress',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'ContractDeployed',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_erc721Address', internalType: 'address', type: 'address' },
+      { name: '_minTokens', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'deployContract',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    name: 'deployedContracts',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getDeployedContracts',
+    outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
+    stateMutability: 'view',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IQuest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -299,6 +343,77 @@ export const useWatchBasicQuestFactoryEvent =
 export const useWatchBasicQuestFactoryContractDeployedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: basicQuestFactoryAbi,
+    eventName: 'ContractDeployed',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__
+ */
+export const useReadErc721QuestFactory = /*#__PURE__*/ createUseReadContract({
+  abi: erc721QuestFactoryAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__ and `functionName` set to `"deployedContracts"`
+ */
+export const useReadErc721QuestFactoryDeployedContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc721QuestFactoryAbi,
+    functionName: 'deployedContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__ and `functionName` set to `"getDeployedContracts"`
+ */
+export const useReadErc721QuestFactoryGetDeployedContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc721QuestFactoryAbi,
+    functionName: 'getDeployedContracts',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__
+ */
+export const useWriteErc721QuestFactory = /*#__PURE__*/ createUseWriteContract({
+  abi: erc721QuestFactoryAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__ and `functionName` set to `"deployContract"`
+ */
+export const useWriteErc721QuestFactoryDeployContract =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc721QuestFactoryAbi,
+    functionName: 'deployContract',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__
+ */
+export const useSimulateErc721QuestFactory =
+  /*#__PURE__*/ createUseSimulateContract({ abi: erc721QuestFactoryAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc721QuestFactoryAbi}__ and `functionName` set to `"deployContract"`
+ */
+export const useSimulateErc721QuestFactoryDeployContract =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc721QuestFactoryAbi,
+    functionName: 'deployContract',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc721QuestFactoryAbi}__
+ */
+export const useWatchErc721QuestFactoryEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: erc721QuestFactoryAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc721QuestFactoryAbi}__ and `eventName` set to `"ContractDeployed"`
+ */
+export const useWatchErc721QuestFactoryContractDeployedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc721QuestFactoryAbi,
     eventName: 'ContractDeployed',
   })
 

@@ -3,8 +3,9 @@ import { react } from '@wagmi/cli/plugins';
 import QuestsCollection from './src/abi/QuestsCollection.json';
 import QuestsCollectionFactory from './src/abi/QuestsCollectionFactory.json';
 import BasicQuestFactory from './src/abi/BasicQuestFactory.json';
+import ERC721QuestFactory from './src/abi/ERC721QuestFactory.json';
 import IQuest from './src/abi/IQuest.json';
- 
+
 export default defineConfig({
   out: 'src/generated.ts',
   contracts: [
@@ -23,6 +24,10 @@ export default defineConfig({
     {
       name: 'BasicQuestFactory',
       abi: BasicQuestFactory,
+    },
+    {
+      name: 'ERC721QuestFactory',
+      abi: ERC721QuestFactory,
     }
   ],
   plugins: [
