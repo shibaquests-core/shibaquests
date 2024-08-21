@@ -1,4 +1,4 @@
-import{a2 as Er,F as pr,q as ei,a3 as qi,a4 as Wi,a1 as ti,B as Te}from"./index-8efe01dc.js";const ji=Object.freeze(Object.defineProperty({__proto__:null,EventEmitter:Er,default:Er},Symbol.toStringTag,{value:"Module"})),Va=pr(ji);var nr={exports:{}},ri=ei.EventEmitter,Ne={};/*!
+import{a2 as Er,F as pr,q as ei,a3 as qi,a4 as Wi,a1 as ti,B as Te}from"./index-fe9e7276.js";const ji=Object.freeze(Object.defineProperty({__proto__:null,EventEmitter:Er,default:Er},Symbol.toStringTag,{value:"Module"})),Va=pr(ji);var nr={exports:{}},ri=ei.EventEmitter,Ne={};/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
