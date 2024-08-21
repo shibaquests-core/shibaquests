@@ -41,7 +41,6 @@ export const RichTextMenuBar: FC = () => {
       });
     },
   });
-  const myRef = useRef(null);
   const { editor } = useCurrentEditor();
 
   const handleClearEditor = () => {
