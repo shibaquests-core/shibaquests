@@ -4,6 +4,7 @@ import QuestsCollection from './src/abi/QuestsCollection.json';
 import QuestsCollectionFactory from './src/abi/QuestsCollectionFactory.json';
 import BasicQuestFactory from './src/abi/BasicQuestFactory.json';
 import ERC721QuestFactory from './src/abi/ERC721QuestFactory.json';
+import ERC20QuestFactory from './src/abi/ERC20QuestFactory.json';
 import IQuest from './src/abi/IQuest.json';
 
 export default defineConfig({
@@ -28,6 +29,10 @@ export default defineConfig({
     {
       name: 'ERC721QuestFactory',
       abi: ERC721QuestFactory,
+    },
+    {
+      name: 'ERC20QuestFactory',
+      abi: ERC20QuestFactory
     }
   ],
   plugins: [

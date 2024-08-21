@@ -10,6 +10,14 @@ export class QuestsCollectionsController {
   async findAll() {
     const collections = await this.prismaService.questCollections.findMany({
       take: 11,
+      orderBy: [
+        {
+          isFeatured: 'desc',
+        },
+        {
+          createdAt: 'desc',
+        },
+      ],
     });
     const featured = collections[0];
     const recent = collections.slice(1);

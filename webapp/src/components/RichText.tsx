@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import { Level } from "@tiptap/extension-heading";
@@ -41,7 +41,22 @@ export const RichTextMenuBar: FC = () => {
       });
     },
   });
+  const myRef = useRef(null);
   const { editor } = useCurrentEditor();
+
+  const handleClearEditor = () => {
+    if (editor) {
+      console.log("clearing editor");
+      editor.chain().clearContent().run();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('clear-editor', handleClearEditor);
+    return () => {
+      window.removeEventListener('clear-editor', handleClearEditor);
+    };
+  }, []);
   if (!editor) {
     return null;
   }

@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "QuestCollections" ADD COLUMN     "isFeatured" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "logo" DROP NOT NULL,
+ALTER COLUMN "cover" DROP NOT NULL;

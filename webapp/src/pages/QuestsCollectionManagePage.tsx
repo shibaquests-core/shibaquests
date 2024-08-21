@@ -11,6 +11,8 @@ import { handleWeb3Error } from '../utils/handleWeb3Error'
 import { useWaitForTransactionReceiptAsync } from '../hooks/useWaitForTransactionReceiptAsync'
 import { toast } from 'react-toastify'
 import { CreateERC721Modal, CreateERC721ModalId } from '../components/modals/CreateERC721QuestModal'
+import { CreateERC20ModalId, CreateERC20Modal } from '../components/modals/CreateERC20QuestModal';
+import { CreateCustomContractModal, CreateCustomContractModalId } from '../components/modals/CreateCustomContractModal';
 
 export interface QuestsCollectionManagePageProps {
 
@@ -65,10 +67,15 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
       setLoading(false);
     }
   };
+  const onDeployed = (quest: DeployedQuest) => {
+    setDeployedQuests([...deployedQuests, quest]);
+  };
   return ( 
     <>
-      <CreateBasicQuestModal onDeployed={(quest) => setDeployedQuests([...deployedQuests, quest])} />
-      <CreateERC721Modal onDeployed={(quest) => setDeployedQuests([...deployedQuests, quest])} />
+      <CreateBasicQuestModal onDeployed={onDeployed} />
+      <CreateERC721Modal onDeployed={onDeployed} />
+      <CreateERC20Modal onDeployed={onDeployed} />
+      <CreateCustomContractModal onDeployed={onDeployed} />
       <div className="w-screen h-screen bg-gray-200 flex items-center justify-center">
         <div className="bg-white w-full max-w-xl border rounded-md shadow-sm">
           <div className="border-b">
@@ -116,6 +123,8 @@ export const QuestsCollectionManagePage: FC<QuestsCollectionManagePageProps> = (
                   </li>
                   <li>
                     <a onClick={() => openModal(CreateERC721ModalId)}>ERC721 Quest</a>
+                    <a onClick={() => openModal(CreateERC20ModalId)}>ERC20 Quest</a>
+                    <a onClick={() => openModal(CreateCustomContractModalId)}>Custom Contract Quest</a>
                   </li>
                 </ul>
               </div>

@@ -13,6 +13,7 @@ import { LoadingButton } from '../LoadingButton';
 import { useWaitForTransactionReceiptAsync } from '../../hooks/useWaitForTransactionReceiptAsync';
 import { handleWeb3Error } from '../../utils/handleWeb3Error';
 import { NumberFormInput } from '../forms/inputs/NumberFormInput';
+import { clearEditor } from '../../utils/clearEditor';
 
 export const CreateERC721ModalId = 'create-erc721-quest-modal';
 
@@ -74,17 +75,18 @@ export const CreateERC721Modal: FC<CreateERC721ModalProps> = (props) => {
       });
       closeModal();
       form.reset();
+      clearEditor();
     }
   }, [txData]);
   return (
     <Form form={form} onSubmit={onSubmit}>
       <dialog id={CreateERC721ModalId} className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Create Basic Quest
+        <h3 className="font-bold text-lg">
+            Create ERC-721 Quest
           </h3>
           <p className="py-4 text-sm">
-            ERC721 is completed by default and anyone can claim the reward.
+            ERC-721 Quest is completed when the user has the required tokens in their wallet.
           </p>
           <div className="py-2">
             <ImageUploaderFormInput name="icon" label="Quest Icon" previewWidth={64} previewHeight={64} />

@@ -16,6 +16,16 @@ export interface QuestItemProps {
   idx: number;
 }
 
+function convertUrlsToLinks(html: string): string {
+  // Regular expression to match URLs
+  const urlRegex = /(?<!href=["'])\bhttps?:\/\/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s<]*)?/gi;
+
+  // Replace matched URLs with anchor tags
+  return html.replace(urlRegex, (url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary">${url}</a>`;
+  });
+}
+
 export const QuestItem: FC<QuestItemProps> = ({ quest, idx }) => {
   const modalId = useId();
   const [loadingClaim, setLoadingClaim] = useState(false);
@@ -59,20 +69,20 @@ export const QuestItem: FC<QuestItemProps> = ({ quest, idx }) => {
     modal?.showModal();
   }
 
-  const safeHtml = useMemo(() => sanitizeHtml(quest.description, {
+  const safeHtml = useMemo(() => convertUrlsToLinks(sanitizeHtml(quest.description, {
     allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'b', 'i', 'strong', 'em', 'u', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'img'],
     allowedAttributes: {
       a: ['href'],
       img: ['src'],
     },
-  }), [quest.description]);
+  })), [quest.description]);
 
   return (
     <>
       <dialog id={modalId} className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{quest.name}</h3>
-          <div className="my-4" dangerouslySetInnerHTML={{ __html: safeHtml }} />
+          <div className="my-4 prose" dangerouslySetInnerHTML={{ __html: safeHtml }} />
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Close</button>

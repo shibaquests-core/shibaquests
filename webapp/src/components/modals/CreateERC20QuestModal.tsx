@@ -3,7 +3,7 @@ import { Form } from '../Form';
 import { useForm } from 'react-hook-form';
 import { TextFormInput } from '../forms/inputs/TextFormInput';
 import { RichTextFormInput } from '../forms/inputs/RichTextFormInput';
-import { basicQuestFactoryAbi, useWriteBasicQuestFactoryDeployContract } from '../../generated';
+import { erc20QuestFactoryAbi, useWriteErc20QuestFactoryDeployContract } from '../../generated';
 import { useWaitForTransactionReceipt } from 'wagmi';
 import { decodeEventLog } from 'viem';
 import { toast } from 'react-toastify';
@@ -12,37 +12,44 @@ import { ImageUploaderFormInput } from '../forms/inputs/ImageUploaderFormInput';
 import { LoadingButton } from '../LoadingButton';
 import { useWaitForTransactionReceiptAsync } from '../../hooks/useWaitForTransactionReceiptAsync';
 import { handleWeb3Error } from '../../utils/handleWeb3Error';
+import { NumberFormInput } from '../forms/inputs/NumberFormInput';
 import { clearEditor } from '../../utils/clearEditor';
 
-export const CreateBasicQuestModalId = 'create-basic-quest-modal';
+export const CreateERC20ModalId = 'create-erc20-quest-modal';
 
-export interface CreateBasicQuestModalFormValues {
+export interface CreateERC20ModalFormValues {
   icon: string;
   name: string;
   description: string;
+  erc20Address: string;
+  minTokens: number;
 }
 
-export interface CreateBasicQuestModalProps {
+export interface CreateERC20ModalProps {
   onDeployed: (quest: DeployedQuest) => void;
 }
 
-export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => {
+export const CreateERC20Modal: FC<CreateERC20ModalProps> = (props) => {
   const waitTxn = useWaitForTransactionReceiptAsync();
   const [loading, setLoading] = useState(false);
-  const form = useForm<CreateBasicQuestModalFormValues>();
-  const { writeContractAsync, data } = useWriteBasicQuestFactoryDeployContract();
+  const form = useForm<CreateERC20ModalFormValues>();
+  const { writeContractAsync, data } = useWriteErc20QuestFactoryDeployContract();
   const { data: txData } = useWaitForTransactionReceipt({
     hash: data,
   });
   const closeModal = () => {
-    const modal = document.getElementById(CreateBasicQuestModalId) as HTMLElement  & { close: () => void };
+    const modal = document.getElementById(CreateERC20ModalId) as HTMLElement  & { close: () => void };
     modal.close();
   };
-  const onSubmit = async () => {
+  const onSubmit = async (data: CreateERC20ModalFormValues) => {
     setLoading(true);
     try {      
       const txn = await writeContractAsync({
-        address: import.meta.env.VITE_BASIC_QUEST_FACTORY_ADDRESS as `0x${string}`,
+        address: import.meta.env.VITE_ERC20_QUEST_FACTORY_ADDRESS as `0x${string}`,
+        args: [
+          data.erc20Address as `0x${string}`,
+          BigInt(data.minTokens) * BigInt(10) ** BigInt(18),
+        ],
       });
       await waitTxn(txn);
     } catch (error) {
@@ -54,7 +61,7 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
     if (txData && txData?.logs) {
       const logs = txData.logs;
       const topics = decodeEventLog({
-        abi: basicQuestFactoryAbi,
+        abi: erc20QuestFactoryAbi,
         data: logs[0].data,
         topics: logs[0].topics,
       });
@@ -73,18 +80,20 @@ export const CreateBasicQuestModal: FC<CreateBasicQuestModalProps> = (props) => 
   }, [txData]);
   return (
     <Form form={form} onSubmit={onSubmit}>
-      <dialog id={CreateBasicQuestModalId} className="modal">
+      <dialog id={CreateERC20ModalId} className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Create Basic Quest
+            Create ERC-20 Quest
           </h3>
           <p className="py-4 text-sm">
-            BasicQuest is completed by default and anyone can claim the reward.
+            ERC-20 Quest is completed when the user has the required tokens in their wallet.
           </p>
           <div className="py-2">
             <ImageUploaderFormInput name="icon" label="Quest Icon" previewWidth={64} previewHeight={64} />
             <TextFormInput name="name" label="Quest Name" />
             <RichTextFormInput name="description" label="Quest Description" />
+            <TextFormInput name="erc20Address" label="ERC20 Contract Address" />
+            <NumberFormInput name="minTokens" label="Min Tokens" />
           </div>
           <div className="modal-action">
             <button type="button" className="btn" onClick={() => closeModal()}>Cancel</button>

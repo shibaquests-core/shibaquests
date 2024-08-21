@@ -13,10 +13,10 @@ export const FAQSection: FC<FAQSectionProps> = () => {
         },
         {
           question: "How can I create a quest?",
-          answer: "Users can create customizable quests through ShibaQuests&#39; user-friendly interface. The quests can range from simple tasks to complex challenges and are governed by Smart Contracts, ensuring transparency, security, and immutability."
+          answer: "Users can create customizable quests through ShibaQuests user-friendly interface. The quests can range from simple tasks to complex challenges and are governed by Smart Contracts, ensuring transparency, security, and immutability."
         },
         {
-          question: "What is the QuestsCollection feature?",
+          question: "What is the QuestsCollection?",
           answer: "The QuestsCollection feature allows users to group multiple quests into a collection. This is especially useful for Web3 developers, game designers, and community leaders who want to create a series of interconnected challenges to drive engagement, reward participation, and build community loyalty."
         },
       ]}
